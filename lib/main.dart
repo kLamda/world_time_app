@@ -6,11 +6,11 @@ import 'package:world_time_app/pages/location.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: "/home",
     routes: {
       "/": (context) => Loading(),
       "/home": (context) => Home(),
-      "/location": (context) => Location()
+      "/location": (context) => Location(),
+      '/location-load' : (context) => LoadingLocation()
     },
   ));
 }
