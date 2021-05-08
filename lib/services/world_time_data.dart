@@ -20,7 +20,7 @@ class WorldTimeData{
       DateTime now = DateTime.parse(data['datetime']);
       now = now.add(Duration(hours: int.parse(offset_hour), minutes: int.parse(offset_minute)));
       time = DateFormat.jm().format(now);
-      isDay = now.hour >6 && now.hour < 18 ? true : false;
+      isDay = now.hour >= 6 && now.hour < 18 ? true : false;
     }
     catch(e){
       print("Error exception is $e");

@@ -14,7 +14,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
     bgImage = data['isDay'] ? 'day.png' : 'night.png';
-    bgColor = data['isDay'] ? Colors.lightBlue : Colors.indigo;
+    bgColor = data['isDay'] ? Colors.deepOrange[350] : Colors.indigo;
     textColor = data['isDay'] ? Colors.grey[600] : Colors.white;
 
 
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
                     letterSpacing: 2,
                     color: textColor
                   ),),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 50,),
                   FlatButton.icon(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/location-load');
