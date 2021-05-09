@@ -11,8 +11,9 @@ void main() {
       "/": (context) => Loading(),
       "/home": (context) => Home(),
       "/location": (context) => Location(),
-      '/location-load' : (context) => LoadingLocation(),
-      "/error" : (context) => Error()
+      // '/location-load' : (context) => LoadingLocation(),
+      "/error" : (context) => Error(),
+      '/update' : (context) => UpdateTime()
     },
   ));
 }
