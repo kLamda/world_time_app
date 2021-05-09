@@ -12,7 +12,8 @@ class _LocationState extends State<Location> {
   void updateTime(index) async {
     WorldTimeData instance = WorldTimeData(url: location_data[index], location: location_data[index].split('/').last);
     await instance.timeData();
-    Navigator.pushReplacementNamed(context, '/home',  arguments: {
+    Navigator.popAndPushNamed(context, '/home',  arguments: {
+      'isError' : instance.isError,
       'time': instance.time,
       'location': instance.location,
       'isDay' : instance.isDay

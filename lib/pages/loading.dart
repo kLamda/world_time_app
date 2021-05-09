@@ -12,10 +12,11 @@ class _LoadingState extends State<Loading> {
   void getTime() async{
     WorldTimeData instance = WorldTimeData(url:'Asia/Kolkata', location: "Kolkata");
     await instance.timeData();
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
+    Navigator.popAndPushNamed(context, '/home', arguments: {
+      'isError' : instance.isError,
       'time': instance.time,
       'location': instance.location,
-      'isDay' : instance.isDay
+      'isDay' : instance.isDay,
     });
   }
   @override

@@ -10,11 +10,16 @@ class _HomeState extends State<Home> {
   String bgImage;
   Color bgColor;
   Color textColor;
+  bool isError;
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
+    isError = data['isError'];
+    if (isError == true){
+      Navigator.pushReplacementNamed(context, '/error');
+    }
     bgImage = data['isDay'] ? 'day.png' : 'night.png';
-    bgColor = data['isDay'] ? Colors.deepOrange[350] : Colors.indigo;
+    bgColor = data['isDay'] ? Colors.deepOrange : Colors.indigo;
     textColor = data['isDay'] ? Colors.grey[600] : Colors.white;
 
 
@@ -48,7 +53,7 @@ class _HomeState extends State<Home> {
                   SizedBox(height: 50,),
                   FlatButton.icon(
                       onPressed: () async {
-                        await Navigator.pushNamed(context, '/location-load');
+                        await Navigator.popAndPushNamed(context, '/location-load');
                         setState(() {
                           data = ModalRoute.of(context).settings.arguments;
                         });
