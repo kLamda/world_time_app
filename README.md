@@ -84,6 +84,25 @@ After the flutter applciation is created the folder structure should look like s
 
 >The test folder can be deleted from the project directory, since its of no use for now.
 
+In our application we shall be having the following :
+* Four widgets
+    * Initial Loading Page [ Will show when data is fetched from API ]
+    * Home Page [ Will display the response from API ]
+    * Select Location [ Will display a list view of all the timezones ]
+    * Error [ This widget shall pop when any kind of exception/error/network connection issue occured]
+* One Service 
+    * Will be having the functions for request and response handling from worldtime API
+
+Create a two directories inside `lib` folder, namely
+* pages
+* services
+
+Inside the `pages` direcotry create 4 dart files namely,
+* error.dart
+* home.dart
+* loading .dart
+* location.dart
+
 Inside the lib folder, open the main.dart file in the editor. By default, it consists of some code. Delete everything present in main.dart and write the following code.
 
 ```dart
