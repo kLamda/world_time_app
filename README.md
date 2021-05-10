@@ -3,7 +3,7 @@
 ![](https://img.shields.io/badge/Flutter-2.0.1-green)
 ![](https://img.shields.io/badge/Dart-2.12.3-orange)
 
-A new Flutter project.
+A new Flutter project demonstrating data fetchig from worldtimeAPI and displaying the time.
 
 ## Getting Started
 
