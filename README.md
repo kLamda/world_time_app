@@ -127,6 +127,9 @@ import 'package:http/http.dart'; //deals with request/response functions
 import 'dart:convert'; 
 import 'package:intl/intl.dart';
 ```
+
+## WorldTimeData Class
+
 ```dart
 
 class WorldTimeData{
@@ -157,7 +160,24 @@ class WorldTimeData{
     }
   }
 }
+```
 
+In the above code snipped a WorldTimeData class is created and the variables are defined. The class has a constructor to enable it have parameters. The class has an asynchronous function ```timeData()``` which has been enabled with ```try cath``` functionality. If any exception occurs then isError variable is assigned true so that the error widget would pe pushed.
+
+In the ```try{}``` segment a https request is made to worldtimeapi and the response is recorded ```response``` variable.
+
+### About the https request
+
+The documentation for Uri.https is in [here](https://api.flutter.dev/flutter/dart-core/Uri/Uri.https.html). It's preferred to use Uri.https rather than Uri.http since it connetion is secure and the debugger won't raise issues regarding insecure connection.
+
+Lets say one want to make a https request to http://worldtimeapi.org/api/timezone/Africa/Abidjan. The code would be as below
+
+```dart
+Uri.https("worldtimeapi.org", "/api/timezone/Africa/Abidjan")
+```
+Since the function of asynchronous, the ```await``` keyword ensures that the programs waits for the response from the API and then the further lines are executed.
+
+```dart
 class LocationData{
   List lData;
   bool isError;
