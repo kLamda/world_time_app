@@ -15,11 +15,11 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-### Installation
+## Installation
 
 For installing flutter to your operating system, follow the [installation](https://flutter.dev/docs/get-started/install/windows) procedure.
 
-## Walking through the code
+# Walking through the code
 
 Open VS code and in the terminal run the following command to create a flutter application.
 ```dart
@@ -52,7 +52,7 @@ After the flutter applciation is created the folder structure should look like s
     ├── Readme.md  
     └── world_time_app.iml
 
-### Folder Description
+## Folder/File Description
 
 1. **.idea:** This folder is at the very top of the project structure, which holds the configuration for Android Studio.
 
@@ -101,6 +101,80 @@ Inside `services` directory create a folder namely `services.dart` .
 
 This file shall be dealing with request and response handling from the worldtimeapi.
 
+## [`world_time_app/lib/services/services.dart`](https://github.com/krishnamecho/world_time_app/blob/master/lib/services/services.dart)
+
+## Adding the dependencies
+
+In the `services.dart` file we shall be requiring `http` and `intl` for request/response and datetime format functions respectively.
+
+And, since these dependencies are not by deafult included while creating the project we need to add the dependencies manually.
+
+Get the latest version of [http](https://pub.dev/packages/http/install) and [intl](https://pub.dev/packages/intl/install) and add to `pubspec.yaml` file. After adding the dependencies the file should look as below.
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.3
+  intl: ^0.17.0
+```
+If the dart plugin is already installed in VScode it would automatically run the ```flutter pub get``` code else manually run the code in the terminal to install the packages.
+
+## Import dependencies
+
+```dart
+import 'package:http/http.dart'; //deals with request/response functions
+import 'dart:convert'; 
+import 'package:intl/intl.dart';
+```
+```dart
+
+class WorldTimeData{
+  String url;
+  String time;
+  String location;
+  bool isDay;
+  bool isError;
+
+  WorldTimeData({this.url, this.location});
+
+  Future<void> timeData() async {
+    try {
+      var url_time = Uri.https("worldtimeapi.org", "/api/timezone/$url");
+      Response response =
+      await get(url_time);
+      Map data = jsonDecode(response.body);
+      String offset_hour = data['utc_offset'].substring(1, 3);
+      String offset_minute = data['utc_offset'].substring(4, 6);
+      DateTime now = DateTime.parse(data['datetime']);
+      now = now.add(Duration(hours: int.parse(offset_hour), minutes: int.parse(offset_minute)));
+      time = DateFormat.jm().format(now);
+      isDay = now.hour >= 6 && now.hour < 18 ? true : false;
+    }
+    catch(e){
+      isError = true;
+      print("Error in loading $e");
+    }
+  }
+}
+
+class LocationData{
+  List lData;
+  bool isError;
+
+  Future<void> locationData() async{
+    try{
+      var url_timezone = Uri.https("worldtimeapi.org", "/api/timezone");
+      Response locationData = await get(url_timezone);
+      lData = json.decode(locationData.body);
+    }
+    catch(e){
+      print("Error in locationData $e");
+      isError = true;
+    }
+  }
+}
+```
 
 Inside the `pages` direcotry create 4 dart files namely,
 * error.dart
