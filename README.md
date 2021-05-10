@@ -130,6 +130,8 @@ import 'package:intl/intl.dart';
 
 ## WorldTimeData Class
 
+In the below code snipped a WorldTimeData class is created and the variables are defined. The class has a constructor to enable it have parameters. The class has an asynchronous function ```timeData()``` which has been enabled with ```try cath``` functionality. If any exception occurs then isError variable is assigned true so that the error widget would pe pushed.
+
 ```dart
 
 class WorldTimeData{
@@ -162,21 +164,57 @@ class WorldTimeData{
 }
 ```
 
-In the above code snipped a WorldTimeData class is created and the variables are defined. The class has a constructor to enable it have parameters. The class has an asynchronous function ```timeData()``` which has been enabled with ```try cath``` functionality. If any exception occurs then isError variable is assigned true so that the error widget would pe pushed.
 
-In the ```try{}``` segment a https request is made to worldtimeapi and the response is recorded ```response``` variable.
+1.  In the ```try{}``` segment a https request is made to worldtimeapi and the response is recorded ```response``` variable. In the `catch(e){}` the exception is printed and `isError` flag is assigned a true value.
 
-### About the https request
+2.  ### About the https request
 
-The documentation for Uri.https is in [here](https://api.flutter.dev/flutter/dart-core/Uri/Uri.https.html). It's preferred to use Uri.https rather than Uri.http since it connetion is secure and the debugger won't raise issues regarding insecure connection.
+    The documentation for Uri.https is in [here](https://api.flutter.dev/flutter/dart-core/Uri/Uri.https.html). It's preferred to use Uri.https rather than Uri.http since it connetion is secure and the debugger won't raise issues regarding insecure connection.
 
-Lets say one want to make a https request to http://worldtimeapi.org/api/timezone/Africa/Abidjan. The code would be as below
+    Lets say one want to make a https request to http://worldtimeapi.org/api/timezone/Africa/Abidjan. The code would be as below
 
-```dart
-Uri.https("worldtimeapi.org", "/api/timezone/Africa/Abidjan")
-```
-Since the function of asynchronous, the ```await``` keyword ensures that the programs waits for the response from the API and then the further lines are executed.
+    ```dart
+    Uri.https("worldtimeapi.org", "/api/timezone/Africa/Abidjan"); //defines the url to which the request would be sent
+    Response response = await get(url_time); //initiates a request and waits for the response and stores in response variable
+    ```
+    Since the function of asynchronous, the ```await``` keyword ensures that the programs waits for the response from the API and then the further lines are executed.
 
+3.  ### Response conversion
+
+    The Json data from the API is stored in response varible in the body key in String format. Since, the `String` format is not much interpretanle we converted it into Map format using the following code and store in `data` variable
+
+    ```dart
+    Map data = jsonDecode(response.body)
+    ```
+4. Now individual information can be extracted by accessing different keys in the data Map variable.
+
+    Furthermore certain indiviual information are stored into String Variable by the accessing the keys of `Map data`
+
+    ```dart
+    String offset_hour = data['utc_offset'].substring(1, 3); //for the hours value of the offsets
+    String offset_minute = data['utc_offset'].substring(4, 6); //for getting the minutes value of the offset
+    ```
+
+5. The current time is parsed to DateTime format by the following code
+    ```dart
+    DateTime now = DateTime.parse(data['datetime']);
+    ```
+6. In order to get the actual time at different location as per GMT values of different timezones, it is added to the `now` variable via the following code
+    ```dart
+    now = now.add(Duration(hours: int.parse(offset_hour), minutes: int.parse(offset_minute)));
+    ```
+7. To display a proper timeformat we use the `DateFormat.jm().format(<variable>)` of `intl` package 
+    ```dart
+    time = DateFormat.jm().format(now);
+    ```
+
+8. `isDay` is boolean variable which notifies whether the time hours comes under daylight hours or not.
+    ```dart
+    isDay = now.hour >= 6 && now.hour < 18 ? true : false;
+    ```
+
+## LocationData Class
+The code snippet below is used to request for timezone from worldtimeapi and convert the response into list of timezones.
 ```dart
 class LocationData{
   List lData;
@@ -195,6 +233,21 @@ class LocationData{
   }
 }
 ```
+1. Initially the variables are defined and then a future asynchronous `locationData()` function is defined with `try catch` functionality.
+
+2. The url for requesting timezone is http://worldtimeapi.org/api/timezone/, which is defined via the following command
+    ```dart
+    var url_timezone = Uri.https("worldtimeapi.org", "/api/timezone");
+    ```
+
+3. The request is initiated and the response is stored via the following code.
+    ```dart
+    Response locationData = await get(url_timezone);
+    ```
+4. The conversion of the response into list format and stored in `lData` using the following
+    ```dart
+    lData = json.decode(locationData.body);
+    ```
 
 Inside the `pages` direcotry create 4 dart files namely,
 * error.dart
