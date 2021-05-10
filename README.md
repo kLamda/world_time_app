@@ -249,22 +249,128 @@ class LocationData{
     lData = json.decode(locationData.body);
     ```
 
+And now since all our service function are created, let's start creating our main widgets.
+
 Inside the `pages` direcotry create 4 dart files namely,
 * error.dart
 * home.dart
 * loading .dart
 * location.dart
 
+Copy paste the following code to `error.dart, home.dart, loading.dart, location.dart` files.
+```dart
+import 'package:flutter/material.dart';
+```
+For the very initial create a stateful widget in all the files having widget name as `Error, Home, Loading and Location` in the `error.dart, home.dart, loading.dart and location.dart` respectively.
+
+So respective files should look like this in the initial state
+
+`world_time_app/lib/pages/error.dart`
+```dart
+import 'package:flutter/material.dart';
+
+class Error extends StatefulWidget {
+  @override
+  _ErrorState createState() => _ErrorState();
+}
+
+class _ErrorState extends State<Error> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+}
+```
+
+`world_time_app/lib/pages/home.dart`
+```dart
+import 'package:flutter/material.dart';
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+}
+```
+
+`world_time_app/lib/pages/loading.dart`
+```dart
+import 'package:flutter/material.dart';
+
+class Loading extends StatefulWidget {
+  @override
+  _LoadingState createState() => _LoadingState();
+}
+
+class _LoadingState extends State<Loading> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+}
+```
+
+`world_time_app/lib/pages/location.dart`
+```dart
+import 'package:flutter/material.dart';
+
+class Location extends StatefulWidget {
+  @override
+  _LocationState createState() => _LocationState();
+}
+
+class _LocationState extends State<Location> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+    );
+  }
+}
+```
+## [world_time_app/lib/main.dart](https://github.com/k-pie/world_time_app/blob/master/lib/main.dart)
+
 Inside the lib folder, open the main.dart file in the editor. By default, it consists of some code. Delete everything present in main.dart and write the following code.
 
 ```dart
 import 'package:flutter/material.dart';
+import 'package:world_time_app/pages/home.dart';
+import 'package:world_time_app/pages/loading.dart';
+import 'package:world_time_app/pages/location.dart';
+import 'package:world_time_app/pages/error.dart';
 
 void main() {
-  runApp(
-      MaterialApp(
-          home: Home()
-      )
-  );
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    routes: {
+      "/": (context) => Loading(),
+      "/home": (context) => Home(),
+      "/location": (context) => Location(),
+      "/error" : (context) => Error(),
+      '/update' : (context) => UpdateTime()
+    },
+  ));
 }
 ```
+1. ## Import dependencies
+
+    ```dart
+    import 'package:flutter/material.dart'; //imports all Material widgets
+    import 'package:world_time_app/pages/home.dart'; //imports the Home() stateful widget
+    import 'package:world_time_app/pages/loading.dart';//imports the Loading() and UpdateTime() stateful widget
+    import 'package:world_time_app/pages/location.dart';//imports the Location() stateful widget
+    import 'package:world_time_app/pages/error.dart';//imports the Error() stateful widget
+    ```
+
+2. ## Main function
+
+    This function consists of runApp function which ultimately results in the display of the application. We have used routes. THe default route is `"/"`. The function attached to the route shall be executed when the application is opened.
+
+    `debugShowCheckedModeBanner: false,` is mentioned so that the `debug` card that appears in the top-right corner of the application gets removed.
+
+ 
