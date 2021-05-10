@@ -101,8 +101,6 @@ Inside `services` directory create a folder namely `services.dart` .
 
 This file shall be dealing with request and response handling from the worldtimeapi.
 
-<iframe src="https://raw.githubusercontent.com/krishnamecho/world_time_app/master/lib/services/services.dart"></iframe>
-
 
 Inside the `pages` direcotry create 4 dart files namely,
 * error.dart
