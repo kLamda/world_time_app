@@ -97,6 +97,8 @@ Create a two directories inside `lib` folder, namely
 * pages
 * services
 
+Inside `services` directory create a folder namely world_time_data
+
 Inside the `pages` direcotry create 4 dart files namely,
 * error.dart
 * home.dart
